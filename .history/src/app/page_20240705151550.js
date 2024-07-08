@@ -7,7 +7,6 @@ export default async function Home() {
 
   //全てのレビュー情報を取得
   const reviews = await getAllReviews();
-  console.log(reviews);
   return (
     <>
     {/*取得したレビュー情報をももとにリストを生成*/}
