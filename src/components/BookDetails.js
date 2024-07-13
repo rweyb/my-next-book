@@ -5,7 +5,14 @@ export default function BookDetails({ index, book }) {
         <div className="flex w-full mb-4">
             <div>
                 {/*書影を表示 */}
-                <Image src={book.image} alt="" width={140} height={180} />
+                <Image
+                    src={book.image}
+                    alt={book.title}
+                    width={140}
+                    height={180}
+                    style={{ width: 'auto', height: 'auto' }}
+                    priority={true}
+                />
             </div>
             <div>
                 {/*書籍情報をリスト表示(index属性が指定されたら連番も表示)*/}

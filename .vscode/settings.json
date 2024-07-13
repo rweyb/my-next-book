@@ -1,0 +1,16 @@
+{
+    "tailwindCSS.includeLanguages": {
+        "plaintext": "javascript",
+        "typescript": "typescript",
+        "javascriptreact": "javascriptreact",
+        "typescriptreact": "typescriptreact"
+    },
+    "editor.quickSuggestions": {
+        "strings": true
+    },
+    "workbench.editor.empty.hint": "hidden",
+    "git.suggestSmartCommit": false,
+    "workbench.iconTheme": "vscode-icons",
+    "liveServer.settings.CustomBrowser": "chrome",
+    "javascript.updateImportsOnFileMove.enabled": "never"
+}

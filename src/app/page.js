@@ -1,19 +1,8 @@
-import { getAllReviews } from '@lib/getter';
-import LinkedBookDetails from '@/components/LInkedBookDetails';
-
-//常に最新情報を取得
-export const dynamic = 'force-dynamic';
-export default async function Home() {
-
-  //全てのレビュー情報を取得
-  const reviews = await getAllReviews();
-  console.log(reviews);
+export default function Home() {
   return (
-    <>
-    {/*取得したレビュー情報をももとにリストを生成*/}
-    {reviews.map((b, i) => (
-      <LinkedBookDetails book={b} index={i + 1} key={b.id} />
-    ))}
-    </>
+    <div>
+      <h1 className="text-4xl text-indigo-800 font-bold my-2">ホームページへようこそ！</h1>
+      <p>ここから各ページに移動できます。</p>
+    </div>
   );
 }

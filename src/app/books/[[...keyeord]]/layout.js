@@ -10,7 +10,10 @@ export default function BooksLayout({ children }) {
 
 //[検索]ボタンクリック時に「book/keyword」へリダイレクト
     const handleSearch = () => {
-        router.push(`/books/${textKeyword.current.value}`);
+        const keyword = textKeyword.current.value.trim();
+        if (keyword) {
+            router.push(`/books/${keyword}`);
+        }
     };
 
     return (

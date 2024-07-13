@@ -31,3 +31,8 @@ body {
     text-wrap: balance;
   }
 }
+
+/* 新しい背景スタイル */
+.background {
+  background-color: #ffffff; /* ホワイト */
+}
