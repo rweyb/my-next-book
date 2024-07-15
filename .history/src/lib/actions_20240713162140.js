@@ -7,12 +7,6 @@ import { getBookById } from "./getter";
 //フォームからの入力値をデータベースに登録
 export async function addReview(data) {
     const book = await getBookById(data.get('id'));
-    const userId = data.get('userId');
-
-    if (!userId) {
-        throw new Error("ユーザーIDが指定されていません。");
-    }
-
     const input = {
         title: book.title,
         author: book.author,
@@ -21,21 +15,13 @@ export async function addReview(data) {
         published: book.published,
         image: book.image,
         read: new Date(data.get('read')),
-        memo: data.get('memo'),
-        userId: userId
+        memo: data.get('memo')
     };
 
 //新規データであれば登録、既存データであれば更新
     await prisma.review.upsert({
         update: input,
-        create: {
-            ...input,
-            id: data.get('id'),
-            user: {
-                //既存のユーザーに接続
-                connect: { id: data.get('userId')}
-            }
-        },
+        create: Object.assign({}, input, { id: data.get('id') }),
         where: {
             id: data.get('id')
         }

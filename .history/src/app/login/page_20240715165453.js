@@ -4,36 +4,46 @@ import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import {Button, Flex, FormControl, FormErrorMessage, FormLabel, Heading,
-            Input, InputGroup, InputRightElement, useToast, VStack,} from '@/common/design'
+import {Button, Flex, ormControl,
+  FormErrorMessage,
+  FormLabel,
+  Heading,
+  Input,
+  InputGroup,
+  InputRightElement,
+  useToast,
+  VStack,
+} from '@/common/design'
 import { signInWithEmail } from '@/lib/firebase/apis/auth'
 
-// サインイン画面
+/** サインイン画面
+ * @screenname SignInScreen
+ * @description ユーザのサインインを行う画面
+ */
 export default function SignInScreen() {
   const toast = useToast() // トースト通知を使用するためのフック
   const router = useRouter() // ルーターを使用するためのフック
-
-    const {
+  const {
     handleSubmit, // フォーム送信ハンドラー
     register, // フォームフィールドを登録するための関数
     formState: { errors, isSubmitting }, // フォームの状態を取得
-    } = useForm()
+  } = useForm()
 
-    const [show, setShow] = useState(false) // パスワード表示/非表示の状態を管理
+  const [show, setShow] = useState(false) // パスワード表示/非表示の状態を管理
 
-    const onSubmit = handleSubmit(async (data) => {
+  const onSubmit = handleSubmit(async (data) => {
     // サインイン処理を実行し、結果を取得
     await signInWithEmail({
-        email: data.email,
-        password: data.password,
+      email: data.email,
+      password: data.password,
     }).then((res) => {
-    // サインイン結果に応じてトースト通知を表示
-    if (res.isSuccess) {
+      // サインイン結果に応じてトースト通知を表示
+      if (res.isSuccess) {
         toast({
-            title: res.message,
-            status: 'success',
-            duration: 2000,
-            isClosable: true,
+          title: res.message,
+          status: 'success',
+          duration: 2000,
+          isClosable: true,
         })
       } else {
         toast({

@@ -4,57 +4,62 @@ import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import {Button, Flex, FormControl, FormErrorMessage, FormLabel, Heading,
-            Input, InputGroup, InputRightElement, useToast, VStack,} from '@/common/design'
+import {
+  Button,
+  Flex,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  Heading,
+  Input,
+  InputGroup,
+  InputRightElement,
+  useToast,
+  VStack,
+} from '@/common/design'
 import { signInWithEmail } from '@/lib/firebase/apis/auth'
 
-// サインイン画面
+// フォームで使用する変数の型を定義
+type formInputs = {
+  email: string
+  password: string
+}
+
+/** サインイン画面
+ * @screenname SignInScreen
+ * @description ユーザのサインインを行う画面
+ */
 export default function SignInScreen() {
-  const toast = useToast() // トースト通知を使用するためのフック
-  const router = useRouter() // ルーターを使用するためのフック
+  const toast = useToast()
+  const router = useRouter()
+  const {
+    handleSubmit,
+    register,
+    formState: { errors, isSubmitting },
+  } = useForm<formInputs>()
 
-    const {
-    handleSubmit, // フォーム送信ハンドラー
-    register, // フォームフィールドを登録するための関数
-    formState: { errors, isSubmitting }, // フォームの状態を取得
-    } = useForm()
+  const [show, setShow] = useState<boolean>(false)
 
-    const [show, setShow] = useState(false) // パスワード表示/非表示の状態を管理
-
-    const onSubmit = handleSubmit(async (data) => {
-    // サインイン処理を実行し、結果を取得
+  const onSubmit = handleSubmit(async (data) => {
+    // バリデーションチェック
     await signInWithEmail({
-        email: data.email,
-        password: data.password,
-    }).then((res) => {
-    // サインイン結果に応じてトースト通知を表示
-    if (res.isSuccess) {
-        toast({
-            title: res.message,
-            status: 'success',
-            duration: 2000,
-            isClosable: true,
-        })
+      email: data.email,
+      password: data.password,
+    }).then((res: boolean) => {
+      if (res) {
+        console.log('ログイン成功')
       } else {
-        toast({
-          title: res.message,
-          status: 'error',
-          duration: 2000,
-          isClosable: true,
-        })
+        console.log('ログイン失敗')
       }
     })
   })
-
-  const handleClick = () => setShow(!show)
-
   return (
     <Flex
-      flexDirection='column' // フレックスボックスの方向を縦に設定
-      width='100%' // 幅を100%に設定
-      height='100vh' // 高さを100vhに設定
-      justifyContent='center' // 垂直方向の中央に配置
-      alignItems='center' // 水平方向の中央に配置
+      flexDirection='column'
+      width='100%'
+      height='100vh'
+      justifyContent='center'
+      alignItems='center'
     >
       <VStack spacing='5'>
         <Heading>ログイン</Heading>
@@ -74,17 +79,18 @@ export default function SignInScreen() {
                   },
                 })}
               />
+	      // エラーが表示される
               <FormErrorMessage>
-                {errors.email && errors.email.message} 
+                {errors.email && errors.email.message}
               </FormErrorMessage>
             </FormControl>
 
-            <FormControl isInvalid={Boolean(errors.password)}> /
+            <FormControl isInvalid={Boolean(errors.password)}>
               <FormLabel htmlFor='password'>パスワード</FormLabel>
               <InputGroup size='md'>
                 <Input
                   pr='4.5rem'
-                  type={show ? 'text' : 'password'} // パスワードの表示/非表示を切り替え
+                  type={show ? 'text' : 'password'}
                   {...register('password', {
                     required: '必須項目です',
                     minLength: {
@@ -98,11 +104,12 @@ export default function SignInScreen() {
                   })}
                 />
                 <InputRightElement width='4.5rem'>
-                  <Button h='1.75rem' size='sm' onClick={handleClick}>
+                  <Button h='1.75rem' size='sm' onClick={() => setShow(!show)}>
                     {show ? 'Hide' : 'Show'}
                   </Button>
                 </InputRightElement>
               </InputGroup>
+	      // エラーが表示される
               <FormErrorMessage>
                 {errors.password && errors.password.message}
               </FormErrorMessage>
@@ -111,7 +118,7 @@ export default function SignInScreen() {
               marginTop='4'
               color='white'
               bg='teal.400'
-              isLoading={isSubmitting} // 送信中の状態を表示
+              isLoading={isSubmitting}
               type='submit'
               paddingX='auto'
               _hover={{

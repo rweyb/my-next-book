@@ -28,14 +28,7 @@ export async function addReview(data) {
 //新規データであれば登録、既存データであれば更新
     await prisma.review.upsert({
         update: input,
-        create: {
-            ...input,
-            id: data.get('id'),
-            user: {
-                //既存のユーザーに接続
-                connect: { id: data.get('userId')}
-            }
-        },
+        create: Object.assign({}, input, { id: data.get('id') }),
         where: {
             id: data.get('id')
         }
