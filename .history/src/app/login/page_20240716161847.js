@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { signInWithEmail } from '@/lib/firebase/apis/auth';
-import { FaEye, FaRegEyeSlash } from "react-icons/fa";
 
 // サインイン画面
 export default function SignInScreen() {
@@ -81,7 +80,7 @@ export default function SignInScreen() {
                 onClick={handleClick}
                 className="absolute inset-y-0 right-0 px-3 py-2 text-sm text-gray-600"
               >
-                {show ? <FaEye className="w-5 h-5" /> : <FaRegEyeSlash className="w-5 h-5" />}
+                {show ? 'Hide' : 'Show'}
               </button>
             </div>
             {errors.password && <p className="text-sm text-red-600">{errors.password.message}</p>}
@@ -96,9 +95,9 @@ export default function SignInScreen() {
           </button>
 
           <NextLink href="/signup">
-            <span className="block w-full px-4 py-2 mt-4 text-center text-black bg-white border border-gray-300 rounded hover:bg-gray-100">
+            <a className="block w-full px-4 py-2 mt-4 text-center text-black bg-white border border-gray-300 rounded hover:bg-gray-100">
               新規登録はこちらから
-            </span>
+            </a>
           </NextLink>
         </form>
       </div>

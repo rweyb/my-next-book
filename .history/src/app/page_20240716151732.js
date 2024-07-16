@@ -8,12 +8,8 @@ import { useAuth } from '../context/AuthContext';
 export default function HomePage() {
   // ルーターを使用してページ遷移を管理
   const router = useRouter();
-
-  const authContext = useAuth();
-  console.log(authContext);
-  const { user } = authContext || {};
   // 認証コンテキストからユーザー情報を取得
-  //const { user } = useAuth();
+  const { user } = useAuth();
 
   //ユーザーがログインしていない場合、ログインページにリダイレクト
   useEffect(() => {

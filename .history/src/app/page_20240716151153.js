@@ -8,19 +8,15 @@ import { useAuth } from '../context/AuthContext';
 export default function HomePage() {
   // ルーターを使用してページ遷移を管理
   const router = useRouter();
-
-  const authContext = useAuth();
-  console.log(authContext);
-  const { user } = authContext || {};
   // 認証コンテキストからユーザー情報を取得
-  //const { user } = useAuth();
+  const { user } = useAuth();
 
   //ユーザーがログインしていない場合、ログインページにリダイレクト
   useEffect(() => {
     if (!user) {
       router.push('/login')
     }
-  }, [user, router]); // userが変更されるたびにこの効果を実行
+  }, [user]); // userが変更されるたびにこの効果を実行
 
   //ログイン状態を確認中の表示
   if(!user) {
