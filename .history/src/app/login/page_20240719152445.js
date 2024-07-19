@@ -4,24 +4,36 @@ import NextLink from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState, useContext } from 'react';
 import { useForm } from 'react-hook-form';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmail } from '@/lib/firebase/apis/auth';
 import { FaEye, FaRegEyeSlash } from "react-icons/fa";
-import AuthContext from '@/context/AuthContext';
-import { auth } from '@/lib/firebaseConfig'; // Firebase設定ファイルからauthをインポート
+import { AuthContext } from '@/context/AuthContext';
 
 // サインイン画面
 export default function SignInScreen() {
   const router = useRouter(); // ルーターを使用するためのフック
+
   const { handleSubmit, register, formState: { errors, isSubmitting } } = useForm();
-  const [show, setShow] = useState(false); // パスワード表示/非表示の状態を管理
-  const { setUser } = useContext(AuthContext); // AuthContextからsetUserを取得
+  // パスワード表示/非表示の状態を管理
+  const [show, setShow] = useState(false);
+  // AuthContextからsetUserを取得
+  const { setUser } = useContext(AuthContext);
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, data.email, data.password);
-      setUser(userCredential.user); // ユーザー情報を更新
-      alert('サインイン成功');
-      router.push('/'); // ログイン成功後にホームページリダイレクト
+      // サインイン処理を実行し、結果を取得
+      const res = await signInWithEmail({
+        email: data.email,
+        password: data.password,
+      });
+
+      if (res.isSuccess) {
+        alert('サインイン成功: ' + res.message); // サインイン成功時の通知
+        setUser(res.user); // ユーザー情報を更新
+
+        router.push('/'); // ログイン成功後にホームページリダイレクト
+      } else {
+        alert('サインイン失敗: ' + res.message); // サインイン失敗時の通知
+      }
     } catch (error) {
       alert('サインインに失敗しました'); // サインイン処理中のエラー時の通知
     }

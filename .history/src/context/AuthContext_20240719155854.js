@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from '@/lib/firebaseConfig';
+import { onAuthStateChanged } from '@/lib/firebase/apis/auth';
+import { auth } from '@/lib/config';
 
 // 認証コンテキストを作成
 const AuthContext = createContext();

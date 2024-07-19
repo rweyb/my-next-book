@@ -8,7 +8,6 @@ import { signUpWithEmail } from '@/lib/firebase/apis/auth';
 import { FaEye, FaRegEyeSlash } from "react-icons/fa";
 import AuthContext from '@/context/AuthContext';
 
-
 // サインアップ画面
 export default function SignUpScreen() {
   const router = useRouter();
