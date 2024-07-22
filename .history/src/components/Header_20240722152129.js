@@ -38,14 +38,14 @@ export default function Header({ children }) {
   // ログアウト処理
   const handleLogout = () => {
     localStorage.setItem('isLoggedIn', 'false');
-    setSignInUser({ uid: '' });
+    setIsLoggedIn(false);
     window.location.href = '/login'; // ログアウト後にログインページにリダイレクト
   };
 
   return (
     <>
       <ul className="flex bg-light-gray mb-4 pl-2 justify-end">
-        {signInUser.uid ? (
+        {isLoggedIn ? (
           <>
             {/* ログインしている場合に表示されるメニュー項目 */}
             <li className="block px-4 py-2 my-1 hover:bg-gray-100 rounded">

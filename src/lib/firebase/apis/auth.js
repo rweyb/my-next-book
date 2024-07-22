@@ -1,5 +1,5 @@
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, 
-            signOut} from 'firebase/auth';
+            signOut as firebaseSignOut} from 'firebase/auth';
 import { auth } from '@/lib/firebaseConfig';
 
 //EmailとPasswordでサインインする関数
@@ -70,7 +70,7 @@ export const logout = async () => {
     let result = { isSuccess: false, message: '' }
 
     // Firebaseのサインアウト関数を呼び出し
-    await signOut(auth)
+    await  firebaseSignOut(auth)
         .then(() => {
         result = { isSuccess: true, message: 'ログアウトしました' }
         })

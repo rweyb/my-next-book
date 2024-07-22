@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "paths": {
+      "@state/*": ["src/state/*"],
       "@lib/*": ["./src/lib/*"],
       "@/*": ["./src/*"],
       "@/common/design": ["./src/common/design"],

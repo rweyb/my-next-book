@@ -3,8 +3,6 @@
 import Link from 'next/link';
 import { Menu, MenuItem, Button } from '@mui/material';
 import { useState, useEffect } from 'react';
-import { useRecoilState } from 'recoil';
-import { signInUserState } from '@state/signInUserState';
 
 export default function Header({ children }) {
   // メニューのアンカー要素の状態を管理
@@ -13,8 +11,7 @@ export default function Header({ children }) {
   const [anchorElFavorites, setAnchorElFavorites] = useState(null);
   const [anchorElStats, setAnchorElStats] = useState(null);
   const [anchorElRecommendations, setAnchorElRecommendations] = useState(null);
-  const [signInUser, setSignInUser] = useRecoilState(signInUserState);
-
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   // メニューを開くためのハンドラー
   const handleClick = (event, setAnchor) => {
@@ -29,23 +26,20 @@ export default function Header({ children }) {
   // コンポーネントのマウント時にログイン状態をチェック
   useEffect(() => {
     const loggedIn = localStorage.getItem('isLoggedIn') === 'true';
-    if (loggedIn) {
-      //ログイン状態がtrueの場合、Recoilの状態を更新
-      setSignInUser({ uid: 'dummy-uid' });
-    }
-  }, [setSignInUser]);
+    setIsLoggedIn(loggedIn);
+  }, []);
 
   // ログアウト処理
   const handleLogout = () => {
     localStorage.setItem('isLoggedIn', 'false');
-    setSignInUser({ uid: '' });
+    setIsLoggedIn(false);
     window.location.href = '/login'; // ログアウト後にログインページにリダイレクト
   };
 
   return (
     <>
       <ul className="flex bg-light-gray mb-4 pl-2 justify-end">
-        {signInUser.uid ? (
+        {isLoggedIn ? (
           <>
             {/* ログインしている場合に表示されるメニュー項目 */}
             <li className="block px-4 py-2 my-1 hover:bg-gray-100 rounded">
