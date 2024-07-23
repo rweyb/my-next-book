@@ -2,7 +2,7 @@ import React from 'react';
 import { FaHeart } from 'react-icons/fa';
 import { useRecoilState } from 'recoil';
 import { FavoritesBookState } from '@/state/FavoritesBookState';
-
+import Link from 'next/link'; 
 
 const FavoriteButton = ({ bookId, onAddFavorite, onRemoveFavorite }) => {
   const [favorites, setFavorites] = useRecoilState(FavoritesBookState);

@@ -8,7 +8,7 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
 import { FaEye, FaRegEyeSlash } from "react-icons/fa";
 import { useRecoilState } from 'recoil';
 import { auth } from '@/lib/firebaseConfig'; 
-import { signInUserState } from '@/state/signInUserState';
+import { signInUserState } from '@/state/signInUserState'; // Firebase設定ファイルからauthをインポート
 
 // サインイン画面
 export default function SignInScreen() {

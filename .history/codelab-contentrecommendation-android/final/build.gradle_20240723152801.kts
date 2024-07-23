@@ -1,0 +1,53 @@
+/*
+ * Copyright 2020 Google LLC
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ *
+ *
+ *
+ */
+
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+plugins {
+    id("com.android.application") version "8.0.0" apply false
+    id("com.android.library") version "8.0.0" apply false
+    id("org.jetbrains.kotlin.android") version "1.8.20" apply false
+    id("com.google.gms.google-services") version "4.3.15" apply false
+    id("androidx.navigation.safeargs") version "2.5.3" apply false
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenLocal()
+        mavenCentral()
+    }
+}
+
+tasks {
+    register("clean", Delete::class) {
+        delete(rootProject.buildDir)
+    }
+}
+
+dependencies {
+    // Import the Firebase BoM
+    implementation(platform("com.google.firebase:firebase-bom:33.1.2"))
+
+    // Add the dependencies for Firebase products you want to use
+    // When using the BoM, don't specify versions in Firebase dependencies
+    // https://firebase.google.com/docs/android/setup#available-libraries
+    implementation("com.google.firebase:firebase-analytics")
+    // 他のFirebase依存関係を追加
+}
