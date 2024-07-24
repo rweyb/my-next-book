@@ -1,12 +1,12 @@
-import { AuthProvider } from '@/context/AuthContext'
 import { RecoilRoot } from 'recoil';
-import '@/app/globals.css';
+import { AuthProvider } from '@/context/AuthContext';
+import '../app/globals.css';
 
 function MyApp({ Component, pageProps }) {
   return (
     <AuthProvider>
       <RecoilRoot>
-      <Component {...pageProps} />
+        <Component {...pageProps} />
       </RecoilRoot>
     </AuthProvider>
   );

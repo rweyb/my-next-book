@@ -147,7 +147,7 @@ export default function SignUpScreen({ closeLoginModal }) {
             新規登録
           </button>
         </form>
-        <NextLink href="/signup">
+        <NextLink href="/login">
         <span className="block w-full px-4 py-2 mt-4 text-center text-black bg-white border border-gray-300 rounded hover:bg-gray-100">
             ログインはこちらから
           </span>
