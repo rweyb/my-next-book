@@ -7,11 +7,13 @@ import { useForm } from 'react-hook-form';
 import { signUpWithEmail } from '@/lib/firebase/apis/auth';
 import { FaEye, FaRegEyeSlash } from "react-icons/fa";
 import { signInUserState } from '@/state/signInUserState'; // Firebase設定ファイルからauthをインポート
+import { auth } from "@/lib/firebaseConfig";
 import { useRecoilState } from 'recoil';
 
 
 // サインアップ画面
-export default function SignUpScreen({ closeLoginModal }) {
+export default function SignUpScreen({ closeLoginModal = () => {} }) {
+
   const router = useRouter();
   const { handleSubmit, register, getValues, formState: { errors, isSubmitting } } = useForm();
   const [password, setPassword] = useState(false);
@@ -20,25 +22,26 @@ export default function SignUpScreen({ closeLoginModal }) {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      const res = await signUpWithEmail({
+      console.log("Form data:", data); // フォームデータをログ出力
+      const result  = await signUpWithEmail({
+        auth,
         email: data.email,
         password: data.password,
       });
 
-      if (res) {
-        alert('サインアップ成功: ' + res.message); // サインアップ成功時の通知
+      if (result ) {
+        alert('サインアップ成功: ' + result .message); // サインアップ成功時の通知
         //ユーザー情報を更新
-        setSignInUser({ uid: res.user.uid });//ユーザー情報を更新
+        setSignInUser({ uid: result .user.uid });//ユーザー情報を更新
         //router.push('/'); // サインアップ成功後ホームページににリダイレクト
       } else {
-        alert('サインアップ失敗: ' + res.message); // サインアップ失敗時の通知
+        alert('サインアップ失敗: ' + result .message); // サインアップ失敗時の通知
       }
     } catch (error) {
+      console.error("Error during sign up:", error); // エラーログを詳細に
       alert('サインアップに失敗しました'); // サインアップ処理中のエラー時の通知
     }
-    if (closeLoginModal) {
       closeLoginModal(); // モーダルを閉じる処理
-    }
   });
 
   const passwordClick = () => setPassword(!password); // パスワード表示/非表示の切り替え
@@ -147,7 +150,7 @@ export default function SignUpScreen({ closeLoginModal }) {
             新規登録
           </button>
         </form>
-        <NextLink href="/signup">
+        <NextLink href="/login">
         <span className="block w-full px-4 py-2 mt-4 text-center text-black bg-white border border-gray-300 rounded hover:bg-gray-100">
             ログインはこちらから
           </span>

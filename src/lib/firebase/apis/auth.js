@@ -8,15 +8,16 @@ export const signInWithEmail = async(args) => {
     let result = { isSuccess: false,message: ''}
     try {
         //Firebaseのサインイン関数を呼び出し
-        const user = await signInWithEmailAndPassword(
+        const userCredential = await signInWithEmailAndPassword(
             auth,
             args.email,
             args.password
         )
 
         //サインイン成功時の処理
-        if (user) {
-            result = { isSuccess: true, message: 'ログインに成功しました'}
+        if (userCredential) {
+            result = { isSuccess: true, message: 'ログインに成功しました',
+                user: userCredential.user };
         }
     } catch (error) {
         //エラーハンドリング
@@ -39,15 +40,16 @@ export const signUpWithEmail =async (args) => {
     let result = { isSuccess: false, message: ''}
     try {
          // Firebaseの新規ユーザー登録関数を呼び出し
-        const user = await createUserWithEmailAndPassword(
+        const userCredential = await createUserWithEmailAndPassword(
             auth,
             args.email,
             args.password
         )
 
         // サインアップ成功時の処理
-        if (user) {
-            result = { isSuccess: true, message: '新規登録に成功しました' }
+        if (userCredential) {
+            result = { isSuccess: true, message: '新規登録に成功しました',
+                user: userCredential.user }
         }
     } catch (error) {
         // エラーハンドリング

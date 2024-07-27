@@ -24,11 +24,7 @@ export default function Header({ children }) {
 
   // メニューを開くためのハンドラー
   const handleClick = (event, setAnchor) => {
-    if (event && event.currentTarget) {
-      setAnchor(event.currentTarget);
-    } else {
-      console.error('Event or currentTarget is null or undefined');
-    }
+    setAnchor(event.currentTarget);
   };
 
   // メニューを閉じるためのハンドラー
@@ -42,6 +38,7 @@ export default function Header({ children }) {
 
   // コンポーネントのマウント時にログイン状態をチェック
   useEffect(() => {
+    localStorage.clear();
     const loggedIn = localStorage.getItem("isLoggedIn") === "true";
     if (loggedIn) {
       //ログイン状態がtrueの場合、Recoilの状態を更新
@@ -52,10 +49,8 @@ export default function Header({ children }) {
     }
     console.log("Logged in:", loggedIn);
     console.log("signInUser state:", signInUser);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  
-  
+  }, [setSignInUser]);
+
   return (
     <>
       <ul className="flex bg-light-gray mb-4 pl-2 justify-end">

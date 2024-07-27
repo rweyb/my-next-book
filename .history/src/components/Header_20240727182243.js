@@ -52,10 +52,8 @@ export default function Header({ children }) {
     }
     console.log("Logged in:", loggedIn);
     console.log("signInUser state:", signInUser);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  
-  
+  }, [setSignInUser]);
+
   return (
     <>
       <ul className="flex bg-light-gray mb-4 pl-2 justify-end">

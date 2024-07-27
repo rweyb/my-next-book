@@ -6,13 +6,16 @@ import { auth } from '@/lib/firebaseConfig';
 const AuthContext = createContext();
 
 // 認証プロバイダーコンポーネント
-export function AuthProvider({ children }) {
+export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null); // ユーザー状態を管理するためのステート
 
   useEffect(() => {
     // Firebaseの認証状態の変更を監視
     const unsubscribe = onAuthStateChanged(auth, (user) => {
+      console.log('onAuthStateChanged user:, user');
       setUser(user); // ユーザー情報をステートに設定
+    }, (error) => {
+      console.error("Failed to authenticate user:", error); // エラーハンドリング
     });
     return () => unsubscribe(); // クリーンアップ関数を返す
   }, []);

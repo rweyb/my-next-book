@@ -1,4 +1,6 @@
-import prisma from "./prisma";
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
 
 //API経由で取得した書籍情報から必要な情報だけをオブジェクトに詰め替え
 export function createBook(book) {

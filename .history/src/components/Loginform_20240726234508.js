@@ -20,11 +20,9 @@ export default function LoginForm(props) {
   const [signInUser, setSignInUser] = useRecoilState(signInUserState); //Recoilの状態を使用
 
   useEffect(() => {
-    if (signInUser) {
-      console.log("signInUser state:", signInUser);
-    }
+    console.log("signInUser state:", signInUser);
   }, [signInUser]);
-  
+
   const onSubmit = handleSubmit(async (data) => {
     try {
       const userCredential = await signInWithEmailAndPassword(

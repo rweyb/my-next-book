@@ -52,9 +52,7 @@ export default function Header({ children }) {
     }
     console.log("Logged in:", loggedIn);
     console.log("signInUser state:", signInUser);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  
+  }, [setSignInUser, signInUser]);
   
   return (
     <>

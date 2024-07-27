@@ -1,11 +1,31 @@
 'use client';
 
 import { addReview, removeReview } from '@/lib/actions';
+import { useAuth } from '@/context/AuthContext';
 
 export default function FormEdit({ src: { id, read, memo } }) {
+
+    //現在のユーザーを取得
+    const { user } = useAuth();
+    console.log('Auth Context in FormEdit:', authContext);
+
+    //フォームのサブミットハンドラー
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        formData.append('userId', user?.uid); //ユーザーIDを追加
+
+        try {
+            await addReview(formData); //レビュー追加
+            console.log('Review added successfully');
+        } catch (error) {
+            console.error('Failed to add review:', error);
+        }
+    };
+
     return (
         //サブミット時にaddReviewメソッドを呼び出し
-        <form action={addReview}>
+        <form onSubmit={handleSubmit}>
             <input type="hidden" name="id" defaultValue={id} />
             <div className="mb-3">
                 <label className="font-bold" htmlFor="read">読了日 :</label>
