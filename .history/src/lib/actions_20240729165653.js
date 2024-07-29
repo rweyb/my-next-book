@@ -21,12 +21,7 @@ export async function addReview(data) {
     // ユーザーが存在しない場合は作成
     if (!user) {
         await prisma.user.create({
-            data: { 
-                id: userId,
-                name: "Default Name",
-                email: `${userId}@example.com`,
-                password: "defaultpassword"
-            }
+            data: { id: userId }
         });
     }
 

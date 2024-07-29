@@ -13,11 +13,7 @@ export default function LoginButton({ setOpenLoginModal }) {
   };
 
   return (
-    <Button onClick={handleLogin} 
-    className="no-underline text-blue-600"
-    aria-controls="logout-button"
-    aria-haspopup="true"
-    >
+    <Button onClick={handleLogin} className="no-underline text-black">
       ログイン
     </Button>
   );

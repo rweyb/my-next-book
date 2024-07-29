@@ -3,7 +3,7 @@ import { signInUserState } from "@state/signInUserState";
 import { useRouter } from "next/navigation";
 import { auth } from "@lib/firebaseConfig";
 import { signOut } from "firebase/auth";
-import { Button } from "@mui/material";
+
 
 export default function LogoutButton() {
   const [signInUser, setSignInUser] = useRecoilState(signInUserState);
@@ -22,13 +22,9 @@ export default function LogoutButton() {
     }
   };
   return (
-    <Button
-    onClick={handleLogout}
-    className="no-underline text-blue-600"
-    aria-controls="logout-button"
-    aria-haspopup="true"
-  >
-    ログアウト
-  </Button>
+    <button onClick={handleLogout} 
+    className="block text-black px-4 py-2 my-1 hover:bg-gray-100 rounded ">
+      ログアウト
+    </button>
   );
 }

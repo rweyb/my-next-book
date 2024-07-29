@@ -1,34 +1,27 @@
-// src/selectors/FavoritesSelector.js
 import { selector } from 'recoil';
-import { FavoritesBookState } from '@/state/FavoritesBookState';
-import { FavoritesListAtom } from '@/state/FavoritesListAtom'; // 正しいパスを使用
+import { FavoritesBookState } from '../state/FavoritesBookState';
+import { FavoritesListAtom } from '../state/FavoritesListAtom';
 
-// FavoritesBookStateとFavoritesListAtomから派生した詳細情報を保持
+// お気に入りの本の詳細情報を取得するセレクター
 export const FavoritesSelector = selector({
-  key: 'FavoritesSelector',
-  get: ({ get }) => {
-    const lists = get(FavoritesBookState);
-    const detailedLists = lists.map(id => get(FavoritesListAtom(id))).filter(item => item !== null);
-    return {
-      count: lists.length, // お気に入りの件数
-      details: detailedLists, // お気に入り本の詳細情報
-    };
-  },
-  set: ({ set, reset }, { type, id, newItem }) => {
-    switch (type) {
-      case 'add':
-        set(FavoritesListAtom(newItem.id), newItem);
-        set(FavoritesBookState, lists => [...lists, newItem.id]);
-        break;
-      case 'done':
-        set(FavoritesListAtom(id), book => ({ ...book, isDone: true }));
-        break;
-      case 'remove':
-        reset(FavoritesListAtom(id));
-        set(FavoritesBookState, lists => lists.filter(e => e !== id));
-        break;
-      default:
-        throw new Error('Type is invalid.');
+  key: 'FavoritesSelector', // セレクターの一意のキー
+  get: async ({ get }) => {
+    try {
+      // お気に入りの本のIDリストを取得
+      const favoriteIds = get(FavoritesBookState);
+      // 各IDに対して本の詳細情報を非同期で取得
+      const favoriteDetails = await Promise.all(favoriteIds.map(id => get(FavoritesListAtom(id))));
+      console.log('FavoritesSelector:', favoriteDetails);
+      // 取得した詳細情報を返す
+      return {
+        details: favoriteDetails,
+      };
+    } catch (error) {
+      // エラーハンドリング
+      console.error('Error in FavoritesSelector:', error);
+      return {
+        details: [],
+      };
     }
   },
 });

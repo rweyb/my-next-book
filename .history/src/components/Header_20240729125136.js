@@ -48,32 +48,30 @@ export default function Header({ children }) {
       setSignInUser({ uid: "dummy-uid" });
     } else {
       // ログイン状態がfalseの場合、Recoilの状態をクリア
-      setSignInUser({ uid: "" });
+      setSignInUser(null);
     }
     console.log("Logged in:", loggedIn);
     console.log("signInUser state:", signInUser);
-  }, [setSignInUser]);
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  
+  
   return (
     <>
       <ul className="flex bg-light-gray mb-4 pl-2 justify-end">
-        {signInUser.uid ? (
+        {signInUser?.uid ? (
           <>
-            {/* ログインしている場合に表示されるメニュー項目 */}
             <li className="block px-4 py-2 my-1 hover:bg-gray-100 rounded">
               <LogoutButton />
             </li>
           </>
         ) : (
-          // ログインしていない場合に表示されるメニュー項目
           <li className="block px-4 py-2 my-1 hover:bg-gray-100 rounded">
             <LoginButton setOpenLoginModal={setOpenLoginModal} />
           </li>
         )}
 
-
-         {/* 書籍管理メニュー */}
-         <li className="block text-black px-4 py-2 my-1 hover:bg-gray-100 rounded">
+        <li className="block text-black px-4 py-2 my-1 hover:bg-gray-100 rounded">
           <Button
             aria-controls="books-menu"
             aria-haspopup="true"
@@ -97,7 +95,6 @@ export default function Header({ children }) {
           </Menu>
         </li>
 
-        {/* レビュー機能メニュー */}
         <li className="block text-black px-4 py-2 my-1 hover:bg-gray-100 rounded">
           <Button
             aria-controls="reviews-menu"
@@ -122,7 +119,6 @@ export default function Header({ children }) {
           </Menu>
         </li>
 
-        {/* お気に入り機能メニュー */}
         <li className="block text-black px-4 py-2 my-1 hover:bg-gray-100 rounded menu-item">
           <Button
             aria-controls="favorites-menu"
@@ -144,7 +140,6 @@ export default function Header({ children }) {
           </Menu>
         </li>
 
-        {/* 読書統計メニュー */}
         <li className="block text-black px-4 py-2 my-1 hover:bg-gray-100 rounded ">
           <Button
             aria-controls="stats-menu"
@@ -166,7 +161,6 @@ export default function Header({ children }) {
           </Menu>
         </li>
 
-        {/* パーソナライズドおすすめメニュー */}
         <li className="block text-black px-4 py-2 my-1 hover:bg-gray-100 rounded ">
           <Button
             aria-controls="recommendations-menu"
@@ -189,7 +183,6 @@ export default function Header({ children }) {
         </li>
       </ul>
 
-      {/* ページコンポーネントを反映する領域 */}
       <div className="ml-2">{children}</div>
       {openLoginModal && <LoginForm closeLoginModal={closeLoginModal} />}
     </>

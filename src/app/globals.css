@@ -16,11 +16,6 @@
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background-color: #ffffff;
-  padding: 0 20px;
-}
 
 @layer utilities {
   .text-balance {

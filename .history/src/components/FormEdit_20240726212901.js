@@ -1,19 +1,19 @@
 'use client';
 
 import { addReview, removeReview } from '@/lib/actions';
-import { useRecoilValue } from 'recoil';
-import { signInUserState } from '@state/signInUserState';
+import { useAuth } from '@/context/AuthContext';
 
 export default function FormEdit({ src: { id, read, memo } }) {
 
     //現在のユーザーを取得
-    const signInUser = useRecoilValue(signInUserState);
+    const { user } = useAuth();
+    console.log('Auth Context in FormEdit:', authContext);
 
     //フォームのサブミットハンドラー
     const handleSubmit = async (event) => {
         event.preventDefault();
         const formData = new FormData(event.target);
-        formData.append('userId', signInUser?.uid); //ユーザーIDを追加
+        formData.append('userId', user?.uid); //ユーザーIDを追加
 
         try {
             await addReview(formData); //レビュー追加

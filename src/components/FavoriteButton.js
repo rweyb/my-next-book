@@ -8,22 +8,25 @@ const FavoriteButton = ({ bookId, onAddFavorite, onRemoveFavorite }) => {
   const [favorites, setFavorites] = useRecoilState(FavoritesBookState);
   const isFavorite = favorites.includes(bookId);
 
-  const handleClick = () => {
+console.log('Current favorites:', favorites);
+  const handleClick = (event) => {
+    event.preventDefault(); // デフォルトのリンク動作を防ぐ
+
     if (isFavorite) {
       const newFavorites = favorites.filter(id => id !== bookId);
       setFavorites(newFavorites);
       console.log('お気に入りから削除:', newFavorites);
-      onRemoveFavorite(bookId);
+      if (onRemoveFavorite) onRemoveFavorite(bookId);
     } else {
       const newFavorites = [...favorites, bookId];
       setFavorites(newFavorites);
       console.log('お気に入りに追加:', newFavorites);
-      onAddFavorite(bookId);
+      if (onAddFavorite) onAddFavorite(bookId);
     }
   };
 
   return (
-    <button onClick={handleClick}>
+    <button type="button" onClick={handleClick}>
       <FaHeart color={isFavorite ? 'red' : 'grey'} />
     </button>
   );

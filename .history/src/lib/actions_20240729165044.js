@@ -13,23 +13,6 @@ export async function addReview(data) {
         throw new Error("ユーザーIDが指定されていません。");
     }
 
-     // ユーザーが存在するか確認
-     const user = await prisma.user.findUnique({
-        where: { id: userId }
-    });
-
-    // ユーザーが存在しない場合は作成
-    if (!user) {
-        await prisma.user.create({
-            data: { 
-                id: userId,
-                name: "Default Name",
-                email: `${userId}@example.com`,
-                password: "defaultpassword"
-            }
-        });
-    }
-
     const input = {
         title: book.title,
         author: book.author,

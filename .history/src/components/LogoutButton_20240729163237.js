@@ -24,7 +24,7 @@ export default function LogoutButton() {
   return (
     <Button
     onClick={handleLogout}
-    className="no-underline text-blue-600"
+    className="no-underline text-black"
     aria-controls="logout-button"
     aria-haspopup="true"
   >

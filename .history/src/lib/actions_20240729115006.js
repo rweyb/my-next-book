@@ -13,23 +13,6 @@ export async function addReview(data) {
         throw new Error("ユーザーIDが指定されていません。");
     }
 
-     // ユーザーが存在するか確認
-     const user = await prisma.user.findUnique({
-        where: { id: userId }
-    });
-
-    // ユーザーが存在しない場合は作成
-    if (!user) {
-        await prisma.user.create({
-            data: { 
-                id: userId,
-                name: "Default Name",
-                email: `${userId}@example.com`,
-                password: "defaultpassword"
-            }
-        });
-    }
-
     const input = {
         title: book.title,
         author: book.author,
@@ -39,25 +22,22 @@ export async function addReview(data) {
         image: book.image,
         read: new Date(data.get('read')),
         memo: data.get('memo'),
+        userId: userId
     };
 
 //新規データであれば登録、既存データであれば更新
     await prisma.review.upsert({
-        where: {
-            id: data.get('id')
-        },
-        update: {
-            ...input,
-            user: {
-                connect: { id: userId }
-            }
-        },
+        update: input,
         create: {
             ...input,
             id: data.get('id'),
             user: {
-                connect: { id: userId }
+                //既存のユーザーに接続
+                connect: { id: userId}
             }
+        },
+        where: {
+            id: data.get('id')
         }
     });
 //処理成功の後はトップページにリダイレクト

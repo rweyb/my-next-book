@@ -24,7 +24,13 @@ export default function LogoutButton() {
   return (
     <Button
     onClick={handleLogout}
-    className="no-underline text-blue-600"
+    sx={{
+      color: 'white', // テキストの色を白に設定
+      backgroundColor: 'teal', // ボタンの背景色をティールに設定
+      '&:hover': {
+        backgroundColor: 'darkslategray', // ホバー時の背景色を設定
+      },
+    }}
     aria-controls="logout-button"
     aria-haspopup="true"
   >

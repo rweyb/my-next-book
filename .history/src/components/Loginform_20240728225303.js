@@ -33,10 +33,7 @@ export default function LoginForm({ closeLoginModal }) {
         data.email,
         data.password
       );
-      // ユーザー情報をオブジェクトとして更新
-      setSignInUser({ uid: userCredential.user.uid }); 
-      // ログイン状態をローカルストレージに保存
-      localStorage.setItem("isLoggedIn", "true");
+      setSignInUser(userCredential.user.uid); //ユーザー情報を更新
       console.log(" userCredential.user.uid", userCredential.user.uid);
       console.log("signInUser", signInUser);
 

@@ -9,7 +9,8 @@ import { FaEye, FaRegEyeSlash } from "react-icons/fa";
 import { signInUserState } from '@/state/signInUserState'; // Firebase設定ファイルからauthをインポート
 import { auth } from "@/lib/firebaseConfig";
 import { useRecoilState } from 'recoil';
-
+import Modal from './Modal';
+import styles from './LoginForm.module.css';
 
 // サインアップ画面
 export default function SignUpScreen({ closeLoginModal = () => {} }) {
@@ -33,7 +34,8 @@ export default function SignUpScreen({ closeLoginModal = () => {} }) {
         alert('サインアップ成功: ' + result .message); // サインアップ成功時の通知
         //ユーザー情報を更新
         setSignInUser({ uid: result .user.uid });//ユーザー情報を更新
-        //router.push('/'); // サインアップ成功後ホームページににリダイレクト
+        localStorage.setItem("isLoggedIn", "true"); // ログイン状態をローカルストレージに保存
+        router.push('/'); // サインアップ成功後ホームページににリダイレクト
       } else {
         alert('サインアップ失敗: ' + result .message); // サインアップ失敗時の通知
       }
@@ -48,10 +50,10 @@ export default function SignUpScreen({ closeLoginModal = () => {} }) {
   const confirmClick = () => setConfirm(!confirm); // パスワード確認表示/非表示の切り替え
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2">
-      <div className="w-full max-w-md p-8 space-y-8 bg-white rounded shadow-md">
-        <h2 className="text-2xl font-bold text-center">新規登録</h2>
-        <form onSubmit={onSubmit} className="space-y-6">
+    <Modal isOpen={true} onClose={closeLoginModal}>
+      <div className={`${styles.panel} ${styles.fadeIn} h-screen flex p-4 flex-col items-center justify-center`}>
+        <form onSubmit={onSubmit} className="p-6 bg-white">
+          <h2 className="text-2xl font-bold text-center text-gray-700">新規登録</h2>
           <div className="space-y-1">
             <label htmlFor="email" className="block text-sm font-medium text-gray-700">メールアドレス</label>
             <input
@@ -149,13 +151,14 @@ export default function SignUpScreen({ closeLoginModal = () => {} }) {
           >
             新規登録
           </button>
+
+          <NextLink href="/login">
+            <span className="block w-full px-4 py-2 mt-4 text-center text-black bg-white border border-gray-300 rounded hover:bg-gray-100">
+              ログインはこちらから
+            </span>
+          </NextLink>
         </form>
-        <NextLink href="/login">
-        <span className="block w-full px-4 py-2 mt-4 text-center text-black bg-white border border-gray-300 rounded hover:bg-gray-100">
-            ログインはこちらから
-          </span>
-        </NextLink>
       </div>
-    </div>
+    </Modal>
   );
 }
