@@ -12,6 +12,7 @@ export default function RootLayout({ children }) {
     <html lang="ja">
       <body className={fnt.className}>
         <RecoilRoot>
+          
           <Header />
             {children} {/* クライアントコンポーネントを使用 */}
         </RecoilRoot>

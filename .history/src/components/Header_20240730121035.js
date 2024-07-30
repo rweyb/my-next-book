@@ -58,9 +58,8 @@ export default function Header({ children }) {
   
   return (
     <>
-       <div className="flex bg-light-gray mb-4 pl-2 justify-between items-center">
-      <h1 className="text-xl font-bold">本棚アプリ</h1>
-      <ul className="flex">
+      <ul className="flex bg-light-gray mb-4 pl-2 justify-end">
+        <h1>本棚アプリ</h1>
         {signInUser?.uid ? (
           <>
             <li className="block px-4 py-2 my-1 hover:bg-gray-100 rounded">
@@ -184,7 +183,7 @@ export default function Header({ children }) {
           </Menu>
         </li>
       </ul>
-      </div>
+
       <div className="ml-2">{children}</div>
       {openLoginModal && <LoginForm closeLoginModal={closeLoginModal} />}
     </>

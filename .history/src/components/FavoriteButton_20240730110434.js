@@ -12,17 +12,17 @@ console.log('Current favorites:', favorites);
   const handleClick = (event) => {
     event.preventDefault(); // デフォルトのリンク動作を防ぐ
 
-    setFavorites(prevFavorites => {
-      if (isFavorite) {
-        const newFavorites = prevFavorites.filter(id => id !== bookId);
-        console.log('お気に入りから削除:', newFavorites);
-        return newFavorites;
-      } else {
-        const newFavorites = [...prevFavorites, bookId];
-        console.log('お気に入りに追加:', newFavorites);
-        return newFavorites;
-      }
-    });
+    if (isFavorite) {
+      const newFavorites = favorites.filter(id => id !== bookId);
+      setFavorites(newFavorites);
+      console.log('お気に入りから削除:', newFavorites);
+      if (onRemoveFavorite) onRemoveFavorite(bookId);
+    } else {
+      const newFavorites = [...favorites, bookId];
+      setFavorites(newFavorites);
+      console.log('お気に入りに追加:', newFavorites);
+      if (onAddFavorite) onAddFavorite(bookId);
+    }
   };
 
   return (

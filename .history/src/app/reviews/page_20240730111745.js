@@ -1,15 +1,10 @@
 import React from 'react';
-import { useRecoilValue } from 'recoil';
-import { signInUserState } from '@state/signInUserState';
 import { getAllReviews } from '@lib/getter';
 import ReviewsList from '@/components/ReviewsList';
 
 export const dynamic = 'force-dynamic';
 
 export default async function ReviewsPage() {
-    // Recoil の状態からサインインユーザーの情報を取得
-    const signInUser = useRecoilValue(signInUserState);
-
     try {
         const reviews = await getAllReviews(); // すべてのレビューを取得
         console.log(reviews); // デバッグ用にレビューをコンソールに出力
@@ -17,14 +12,10 @@ export default async function ReviewsPage() {
         return (
             <div>
                 <h1>レビュー一覧</h1>
-                {signInUser ? ( // サインインしているユーザーがいる場合
-                    reviews.length === 0 ? ( // レビューがない場合の表示
-                        <p>現在、レビューはありません。</p>
-                    ) : ( // レビューがある場合の表示
-                        <ReviewsList reviews={reviews} />
-                    )
-                ) : ( // サインインしていない場合
-                    <p>サインインしてください。</p>
+                {reviews.length === 0 ? ( // レビューがない場合の表示
+                    <p>現在、レビューはありません。</p>
+                ) : ( // レビューがある場合の表示
+                    <ReviewsList reviews={reviews} />
                 )}
             </div>
         );

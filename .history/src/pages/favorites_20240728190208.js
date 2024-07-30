@@ -3,6 +3,7 @@ import FavoriteButton from "@/components/FavoriteButton";
 import { useSetRecoilState, useRecoilValue } from 'recoil';
 import { FavoritesBookState } from '../state/FavoritesBookState';
 import { FavoritesSelector } from '../selectors/FavoritesSelector';
+import TestComponent from '../components/TestComponent'; // インポート
 
 const FavoritesPage = () => {
   // Recoilの状態更新関数を取得
@@ -19,14 +20,11 @@ const FavoritesPage = () => {
   }
 
   // お気に入り追加
-  const addFavorite = (id) => {
+  const addFavorite = (newItem) => {
     setFavoritesList((lists) => {
-      if (!lists.includes(id)) {
-        const updatedLists = [...lists, id];
+        const updatedLists = [...lists, newItem.id];
         console.log('Adding favorite:', updatedLists);
         return updatedLists;
-      }
-      return lists;
       });
   };
 
@@ -48,9 +46,10 @@ const FavoritesPage = () => {
             {item.title} {/* ここでタイトルを表示 */}
             <FavoriteButton 
               bookId={item.id}
-              onAddFavorite={() => addFavorite(item.id)}
+              onAddFavorite={() => addFavorite(item)}
               onRemoveFavorite={() => removeFavorite(item.id)}
             />
+             <TestComponent bookId={item.id} /> {/* テストコンポーネントを追加 */}
           </li>
         ))}
       </ul>

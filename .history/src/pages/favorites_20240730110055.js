@@ -48,7 +48,7 @@ const FavoritesPage = () => {
             {item.title} {/* ここでタイトルを表示 */}
             <FavoriteButton 
               bookId={item.id}
-              onAddFavorite={() => addFavorite(item.id)}
+              onAddFavorite={() => addFavorite(item)}
               onRemoveFavorite={() => removeFavorite(item.id)}
             />
           </li>

@@ -3,7 +3,7 @@ import { FavoritesBookState } from '../state/FavoritesBookState';
 import { FavoritesListAtom } from '../state/FavoritesListAtom';
 
 // お気に入りの本の詳細情報を取得するセレクター
-export const FavoritesSelector = selectorFamily({
+export const FavoritesSelector = selector({
   key: 'FavoritesSelector', // セレクターの一意のキー
   get: async ({ get }) => {
     try {

@@ -17,14 +17,10 @@ export default async function ReviewsPage() {
         return (
             <div>
                 <h1>レビュー一覧</h1>
-                {signInUser ? ( // サインインしているユーザーがいる場合
-                    reviews.length === 0 ? ( // レビューがない場合の表示
-                        <p>現在、レビューはありません。</p>
-                    ) : ( // レビューがある場合の表示
-                        <ReviewsList reviews={reviews} />
-                    )
-                ) : ( // サインインしていない場合
-                    <p>サインインしてください。</p>
+                {reviews.length === 0 ? ( // レビューがない場合の表示
+                    <p>現在、レビューはありません。</p>
+                ) : ( // レビューがある場合の表示
+                    <ReviewsList reviews={reviews} />
                 )}
             </div>
         );
