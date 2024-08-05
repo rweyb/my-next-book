@@ -1,0 +1,45 @@
+.header-space {
+    height: 60px; 
+  }
+  
+  /* 書籍管理ボタンやその他メニューアイテムのカスタムスタイル */
+  .custom-menu-button {
+    font-size: 16px; /* 文字の大きさ */
+    color: #333; /* 文字の色 */
+  }
+  
+  .custom-menu-link {
+    font-size: 16px; /* 文字の大きさ */
+    color: #333; /* 文字の色 */
+    text-decoration: none; /* 下線を削除 */
+  }
+  
+  .custom-menu-link:hover {
+    text-decoration: underline; /* ホバー時の下線 */
+  }
+  
+  /* 追加: ヘッダーの一般的なスタイル */
+  .header-container {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #fff; /* ヘッダーの背景色 */
+    z-index: 10; /* 他の要素より前に表示 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 軽いシャドウ効果 */
+  }
+  
+  .header-title {
+    font-size: 1.25rem; /* ヘッダータイトルの文字の大きさ */
+    font-weight: bold; /* ヘッダータイトルの太さ */
+  }
+  
+  .header-menu-item {
+    padding: 0.5rem 1rem; /* メニューアイテムのパディング */
+    margin: 0.25rem; /* メニューアイテムのマージン */
+    border-radius: 0.25rem; /* メニューアイテムの角の丸み */
+  }
+  
+  .header-menu-item:hover {
+    background-color: #f0f0f0; /* ホバー時の背景色 */
+  }
+  

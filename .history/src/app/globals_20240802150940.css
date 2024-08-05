@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* レスポンシブスタイルの追加 */
+@media (max-width: 600px) {
+  .container {
+    padding: 10px;
+  }
+  .text-lg {
+    font-size: 1.25rem; /* 20px */
+  }
+}
+
+@media (min-width: 601px) and (max-width: 1024px) {
+  .container {
+    padding: 20px;
+  }
+  .text-lg {
+    font-size: 1.5rem; /* 24px */
+  }
+}
+
+@media (min-width: 1025px) {
+  .container {
+    padding: 30px;
+  }
+  .text-lg {
+    font-size: 1.75rem; /* 28px */
+  }
+}

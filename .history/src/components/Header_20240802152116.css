@@ -1,0 +1,34 @@
+
+/* ヘッダーのコンテナ */
+.header-container {
+    display: flex;
+    justify-content: flex-start; /* コンテンツを左揃え */
+    align-items: center;
+    padding: 0 1rem; /* 左右の余白 */
+    background-color: #ffffff; /* 背景色 */
+    border-bottom: 1px solid #ddd; /* 下部に境界線を追加 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 少しの影を追加 */
+  }
+  
+  /* ヘッダーのタイトル */
+  .header-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-right: 2rem; /* タイトルとメニューの間隔 */
+  }
+  
+  /* ヘッダー内のメニューアイテム */
+  .header-menu-item {
+    margin-right: 1rem; /* メニューアイテムの間隔 */
+  }
+  
+  /* メニューのリンク */
+  .custom-menu-link {
+    font-size: 1rem;
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .custom-menu-link:hover {
+    text-decoration: underline;
+  }

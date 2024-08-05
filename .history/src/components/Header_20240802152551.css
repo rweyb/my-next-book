@@ -1,0 +1,51 @@
+
+/* ヘッダーのコンテナ */
+.header-container {
+    display: flex;
+    justify-content: flex-end; /* コンテンツを右揃え */
+    align-items: center;
+    padding: 0 1rem; /* 左右の余白 */
+    background-color: #ffffff; /* 背景色 */
+    border-bottom: 1px solid #ddd; /* 下部に境界線を追加 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 少しの影を追加 */
+  }
+  
+  /* ヘッダーのタイトル */
+  .header-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-right: 2rem; /* タイトルとメニューの間隔 */
+    color: #333; /* タイトルの色 */
+  }
+  
+  /* ヘッダー内のメニューアイテム */
+  .header-menu-item {
+    margin-left: 1rem; /* メニューアイテムの間隔 */
+  }
+  
+  /* メニューのボタン */
+  .custom-menu-button {
+    font-size: 1rem;
+    color: #007bff; /* ボタンの色 */
+    text-transform: none; /* ボタンのテキスト変換を無効 */
+    border: 1px solid transparent; /* ボーダーの初期設定 */
+    border-radius: 4px; /* ボーダーの丸み */
+    padding: 6px 12px; /* ボタンのパディング */
+    background-color: #f0f0f0; /* ボタンの背景色 */
+  }
+  
+  .custom-menu-button:hover {
+    background-color: #e0e0e0; /* ボタンホバー時の背景色 */
+    border-color: #007bff; /* ホバー時のボーダー色 */
+  }
+  
+  /* メニューのリンク */
+  .custom-menu-link {
+    font-size: 1rem;
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .custom-menu-link:hover {
+    text-decoration: underline;
+  }

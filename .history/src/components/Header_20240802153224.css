@@ -1,0 +1,40 @@
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 16px;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .header-title {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: right;
+    flex: 1;
+  }
+  
+  .flex {
+    display: flex;
+    align-items: center;
+  }
+  
+  .header-menu-item {
+    margin: 0 8px;
+  }
+  
+  .custom-menu-button {
+    font-size: 1rem;
+    color: #007bff; /* テキストの色 */
+    text-transform: none;
+    border-radius: 4px;
+    padding: 6px 12px;
+    background-color: transparent; /* 背景色を透明に設定 */
+    border: none; /* ボーダーを削除 */
+  }
+  
+  .custom-menu-button:hover {
+    background-color: #e0e0e0; /* ホバー時の背景色 */
+    color: #0056b3; /* ホバー時のテキスト色 */
+  }
