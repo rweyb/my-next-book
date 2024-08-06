@@ -19,12 +19,9 @@ export default function BookResult({ params }) {
                 setError('キーワードが指定されていません。');
                 return;
             }
-    
-            // keywordを文字列に変換
-            const searchKeyword = String(keyword);
             
             try {
-                const fetchedBooks = await getBooksByKeyword(searchKeyword, page, booksPerPage); // 書籍データを取得
+                const fetchedBooks = await getBooksByKeyword(keyword, page, booksPerPage); // 書籍データを取得
                 console.log('Fetched Books:', fetchedBooks); // 追加
                 setBooks(fetchedBooks);
                 setError(null);
@@ -36,6 +33,8 @@ export default function BookResult({ params }) {
     
         fetchBooks();
     }, [keyword, page]);
+    
+    
     
     // ページ変更時に呼び出される関数
     const handleChange = (event, value) => {

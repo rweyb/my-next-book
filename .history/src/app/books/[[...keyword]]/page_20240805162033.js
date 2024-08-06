@@ -14,29 +14,28 @@ export default function BookResult({ params }) {
     const booksPerPage = 10; // 1ページあたりの書籍数
 
     useEffect(() => {
+        console.log('Search keyword (decoded):', decodeURIComponent(keyword)); // デコードされたキーワードを確認
+        // キーワードに基づいて書籍データを取得する非同期関数
         const fetchBooks = async () => {
             if (!keyword) {
+                // キーワードがない場合の処理
                 setError('キーワードが指定されていません。');
                 return;
             }
-    
-            // keywordを文字列に変換
-            const searchKeyword = String(keyword);
             
             try {
-                const fetchedBooks = await getBooksByKeyword(searchKeyword, page, booksPerPage); // 書籍データを取得
-                console.log('Fetched Books:', fetchedBooks); // 追加
-                setBooks(fetchedBooks);
-                setError(null);
+                const fetchedBooks = await getBooksByKeyword(keyword, page, booksPerPage); // 書籍データを取得
+                setBooks(fetchedBooks); // 書籍データを状態にセット
+                setError(null); // エラーがないことを確認
             } catch (error) {
-                console.error("書籍データの取得中にエラーが発生しました:", error);
+                console.error("書籍データの取得中にエラーが発生しました:", error); // エラーログをコンソールに出力
                 setError('書籍情報の取得に失敗しました。もう一度お試しください。');
             }
         };
-    
-        fetchBooks();
-    }, [keyword, page]);
-    
+
+        fetchBooks(); // 書籍データを取得する関数を呼び出し
+    }, [keyword, page]); // キーワードまたはページが変更されるたびに実行
+
     // ページ変更時に呼び出される関数
     const handleChange = (event, value) => {
         setPage(value); // 現在のページ番号を更新
@@ -52,14 +51,13 @@ export default function BookResult({ params }) {
             ) : (
                 <>
                     {/* 現在のページに表示する書籍データをリスト表示 */}
-                    {books.length > 0 ? (
-                    paginatedBooks.map((b, i) => (
-                        <LinkedBookDetails book={b} index={i + 1} key={b.id} />
-                    ))
+                    {paginatedBooks.length > 0 ? (
+                        paginatedBooks.map((b, i) => (
+                            <LinkedBookDetails book={b} index={i + 1} key={b.id} />
+                        ))
                     ) : (
-                        <p>書籍情報が見つかりませんでした。</p>
+                        <p>書籍情報が見つかりませんでした。</p> // 書籍データがない場合のメッセージ
                     )}
-
                     {/* ページネーションコンポーネント */}
                     <PaginationComponent
                         page={page} // 現在のページ番号

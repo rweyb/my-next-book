@@ -19,13 +19,9 @@ export default function BookResult({ params }) {
                 setError('キーワードが指定されていません。');
                 return;
             }
-    
-            // keywordを文字列に変換
-            const searchKeyword = String(keyword);
             
             try {
-                const fetchedBooks = await getBooksByKeyword(searchKeyword, page, booksPerPage); // 書籍データを取得
-                console.log('Fetched Books:', fetchedBooks); // 追加
+                const fetchedBooks = await getBooksByKeyword(keyword, page, booksPerPage); // 書籍データを取得
                 setBooks(fetchedBooks);
                 setError(null);
             } catch (error) {
@@ -33,7 +29,6 @@ export default function BookResult({ params }) {
                 setError('書籍情報の取得に失敗しました。もう一度お試しください。');
             }
         };
-    
         fetchBooks();
     }, [keyword, page]);
     
@@ -52,14 +47,13 @@ export default function BookResult({ params }) {
             ) : (
                 <>
                     {/* 現在のページに表示する書籍データをリスト表示 */}
-                    {books.length > 0 ? (
-                    paginatedBooks.map((b, i) => (
-                        <LinkedBookDetails book={b} index={i + 1} key={b.id} />
-                    ))
+                    {paginatedBooks.length > 0 ? (
+                        paginatedBooks.map((b, i) => (
+                            <LinkedBookDetails book={b} index={i + 1} key={b.id} />
+                        ))
                     ) : (
-                        <p>書籍情報が見つかりませんでした。</p>
+                        <p>書籍情報が見つかりませんでした。</p> // 書籍データがない場合のメッセージ
                     )}
-
                     {/* ページネーションコンポーネント */}
                     <PaginationComponent
                         page={page} // 現在のページ番号

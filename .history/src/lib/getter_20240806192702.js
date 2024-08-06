@@ -54,33 +54,34 @@ export async function getBooksByKeyword(keyword, page = 1, booksPerPage = 10) {
         return [];
     }
 
-    // keywordを文字列に変換
-    const searchKeyword = String(keyword);
-
     try {
         const startIndex = (page - 1) * booksPerPage;
-        const result = await fetchWithBackoff(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(searchKeyword)}&langRestrict=ja&maxResults=${booksPerPage}&startIndex=${startIndex}&printType=books`);
-        
+        const result = await fetchWithBackoff(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(keyword)}&langRestrict=ja&maxResults=${booksPerPage}&startIndex=${startIndex}&printType=books`);
         console.log('API Response:', result);
-        console.log('Items:', result.items);
 
         if (!result.items) {
             console.warn("書籍情報が取得できませんでした。");
             return [];
         }
 
-        // キーワードに基づいてフィルタリング
-        const filteredBooks = result.items.filter(book => {
-            const title = book.volumeInfo?.title || '';
-            const authors = book.volumeInfo?.authors?.join(', ') || '';
-            return title.toLowerCase().includes(searchKeyword.toLowerCase()) || authors.toLowerCase().includes(searchKeyword.toLowerCase());
-        });
-
-        return filteredBooks.map(createBook);
+        return result.items.map(createBook);
 
     } catch (error) {
         console.error("Error fetching books:", error);
         return [];
+    }
+}
+
+
+// id値をキーに書籍情報を取得
+export async function getBookById(id) {
+    try {
+        const result = await fetchWithBackoff(`https://www.googleapis.com/books/v1/volumes/${id}`);
+        console.log('API Response:', result); // レスポンスの構造を確認
+        return createBook(result);
+    } catch (error) {
+        console.error(`Error fetching book by ID ${id}:`, error);
+        return null;
     }
 }
 
