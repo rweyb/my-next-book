@@ -18,14 +18,21 @@ export function createBook(book) {
     };
 }
 
-// エクスポネンシャルバックオフを使ってリクエストを再試行する関数（リトライ回数を1回に設定）
-const fetchWithBackoff = async (url, delay = 1000) => {
+const API_KEY = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
+
+// エクスポネンシャルバックオフを使ってリクエストを再試行する関数
+const fetchWithBackoff = async (url, retries = 3, delay = 1000) => {
     try {
-        const res = await fetch(url);
+        const fullUrl = `${url}&key=${API_KEY}`;
+        const res = await fetch(fullUrl);
         if (res.status === 429) {
-            console.warn("リクエスト制限に達しました。再試行します。");
-            await new Promise(resolve => setTimeout(resolve, delay)); // 指定した遅延後に再試行
-            return fetchWithBackoff(url, delay * 2); // 再試行時に遅延を増加させる
+            if (retries > 0) {
+                console.warn("リクエスト制限に達しました。再試行します。");
+                await new Promise(resolve => setTimeout(resolve, delay)); // 指定した遅延後に再試行
+                return fetchWithBackoff(url, retries - 1, delay * 2);
+            } else {
+                throw new Error("リクエスト制限に達しました。再試行回数を超えました。");
+            }
         }
         if (!res.ok) {
             throw new Error(`HTTP error! status: ${res.status}`);
@@ -46,6 +53,8 @@ export async function getBooksByKeyword(keyword) {
 
     try {
         const result = await fetchWithBackoff(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(keyword)}&langRestrict=ja&maxResults=20&printType=books`);
+        console.log('API Response:', result);
+
         if (!result.items) {
             console.warn("書籍情報が取得できませんでした。");
             return [];
@@ -64,6 +73,7 @@ export async function getBooksByKeyword(keyword) {
 export async function getBookById(id) {
     try {
         const result = await fetchWithBackoff(`https://www.googleapis.com/books/v1/volumes/${id}`);
+        console.log('API Response:', result); // レスポンスの構造を確認
         return createBook(result);
     } catch (error) {
         console.error(`Error fetching book by ID ${id}:`, error);
