@@ -46,36 +46,31 @@ export default function Header({ children }) {
     const loginCheck = async () => {
       const loggedIn = localStorage.getItem("isLoggedIn") === "true";
       if (loggedIn) {
+        //ログイン状態がtrueの場合、Recoilの状態を更新
         setSignInUser({ uid: "dummy-uid" });
-        const userId = "dummy-uid";
-
-        try {
-          // Fetch favorites
-          const favoritesResponse = await fetch(`/api/favorites?userId=${userId}`);
-          if (!favoritesResponse.ok) {
-            throw new Error("Failed to fetch favorites");
-          }
-          const favoritesData = await favoritesResponse.json();
-          setFavorites(favoritesData.map(d => d.bookId));
-
-          // Fetch owned books
-          const ownedBooksResponse = await fetch(`/api/bookshelf?userId=${userId}`);
-          if (!ownedBooksResponse.ok) {
-            throw new Error("Failed to fetch owned books");
-          }
-          const ownedBooksData = await ownedBooksResponse.json();
-          setOwnedBooks(ownedBooksData.map(b => b.id));
-          
-        } catch (error) {
-          console.error("Error fetching user data:", error);
+        const query = new URLSearchParams({
+          userId: "dummy-uid",
+        }).toString();
+        const response = await fetch(`/api/favorites?${query}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch favorites");
         }
+        const data = await response.json();
+        const favorites = data.map((d) => d.bookId);
+        setFavorites(favorites);
+        console.log("favolites", favorites);
       } else {
+        // ログイン状態がfalseの場合、Recoilの状態をクリア
         setSignInUser(null);
       }
+      console.log("Logged in:", loggedIn);
+      console.log("signInUser state:", signInUser);
     };
     loginCheck();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   return (
     <>
       <div className="flex items-center justify-between p-4 bg-white border-b border-gray-300">

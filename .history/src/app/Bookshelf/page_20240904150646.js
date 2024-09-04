@@ -11,7 +11,6 @@ import Image from "next/image";
 const BookshelfPage = () => {
   const [ownedBooks, setOwnedBooks] = useRecoilState(OwnedBooksState); // 所有する本の状態管理
   const signInUser = useRecoilValue(signInUserState); // サインインユーザーの取得
-  const [books, setBooks] = useState([]); // 書籍情報の状態管理
   const [error, setError] = useState(null); // エラーメッセージの状態管理
 
   useEffect(() => {
@@ -28,8 +27,7 @@ const BookshelfPage = () => {
           throw new Error("Failed to fetch owned books");
         }
         const data = await response.json();
-        setBooks(data || []);
-        setOwnedBooks(data || []); // ここで Recoil の状態も更新
+        setOwnedBooks(data || []);
       } catch (error) {
         console.error("Error fetching owned books:", error);
         setError("本棚の取得中にエラーが発生しました。");
@@ -38,36 +36,6 @@ const BookshelfPage = () => {
 
     fetchOwnedBooks();
   }, [signInUser, setOwnedBooks]); // `signInUser` または `setOwnedBooks` が変更されると再実行
-
-  
-  const handleOwnedChange = async (bookId, isOwned) => {
-    try {
-      if (isOwned) {
-        // 所有する本を追加する処理
-        await fetch("/api/bookshelf", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ userId: signInUser.uid, bookId }),
-        });
-      } else {
-        // 所有する本を削除する処理
-        await fetch("/api/bookshelf", {
-          method: "DELETE",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ userId: signInUser.uid, bookId }),
-        });
-      }
-
-      // 状態を再取得して更新
-      const dataResponse = await fetch(`/api/bookshelf?userId=${signInUser.uid}`);
-      const data = await dataResponse.json();
-      setBooks(data || []);
-      setOwnedBooks(data || []); // Recoil の状態も更新
-    } catch (error) {
-      console.error("Error updating owned books:", error);
-      setError("本棚の更新中にエラーが発生しました。");
-    }
-  };
 
   if (!signInUser || !signInUser.uid) {
     return (
@@ -82,8 +50,8 @@ const BookshelfPage = () => {
         <p className="text-red-500">{error}</p>
       ) : (
         <ul className="space-y-4">
-          {books.length > 0 ? (
-            books.map((book) => (
+          {ownedBooks.length > 0 ? (
+            ownedBooks.map((book) => (
               <li key={book.id} className="flex items-center space-x-4 border-b pb-4">
                 <div className="flex-shrink-0">
                   <Image
@@ -107,11 +75,7 @@ const BookshelfPage = () => {
                       : "出版日がありません"}
                   </p>
                 </div>
-                <MyBooksButton
-                  bookId={book.id}
-                  isOwned={ownedBooks.some(b => b.id === book.id)} // 所有状態を判断
-                  onChange={handleOwnedChange} // 状態変更ハンドラーを追加
-                />
+                <MyBooksButton bookId={book.id} />
               </li>
             ))
           ) : (

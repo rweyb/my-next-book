@@ -7,11 +7,13 @@ import { signInUserState } from "@/state/signInUserState";
 import MyBooksButton from "@/components/MyBooksButton";
 import ReturnTopButton from "@/components/ReturnTopButton";
 import Image from "next/image";
+import { favoritesState } from "@/state/favoritesState"; // お気に入りの状態管理も追加
 
 const BookshelfPage = () => {
   const [ownedBooks, setOwnedBooks] = useRecoilState(OwnedBooksState); // 所有する本の状態管理
   const signInUser = useRecoilValue(signInUserState); // サインインユーザーの取得
   const [books, setBooks] = useState([]); // 書籍情報の状態管理
+  const [favorites, setFavorites] = useRecoilState(favoritesState); // お気に入りの状態管理
   const [error, setError] = useState(null); // エラーメッセージの状態管理
 
   useEffect(() => {
@@ -39,7 +41,29 @@ const BookshelfPage = () => {
     fetchOwnedBooks();
   }, [signInUser, setOwnedBooks]); // `signInUser` または `setOwnedBooks` が変更されると再実行
 
-  
+  useEffect(() => {
+    const fetchFavorites = async () => {
+      if (!signInUser?.uid) return;
+
+      try {
+        const response = await fetch(`/api/favorites?userId=${signInUser.uid}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch favorites");
+        }
+        const favoritesData = await response.json();
+        if (Array.isArray(favoritesData)) {
+          setFavorites(favoritesData.map(fav => fav.bookId)); // お気に入りのIDをセット
+        } else {
+          console.error("Unexpected data format:", favoritesData);
+        }
+      } catch (error) {
+        console.error("Error fetching favorites:", error);
+      }
+    };
+
+    fetchFavorites();
+  }, [signInUser, setFavorites]); // `signInUser` または `setFavorites` が変更されると再実行
+
   const handleOwnedChange = async (bookId, isOwned) => {
     try {
       if (isOwned) {

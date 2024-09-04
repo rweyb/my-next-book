@@ -56,13 +56,14 @@ const MyBooksButton = ({ bookId, bookObj = {} }) => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(requestBody),
           });
-
+          
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({ error: "Unknown error" }));
         console.error("エラーレスポンス:", errorData.error || "Unknown error");
         throw new Error(
           `HTTPエラー! ステータス: ${response.status}, メッセージ: ${
-            errorData.error || "Unknown error"}`
+            errorData.error || "Unknown error"
+          }`
         );
       }
 

@@ -38,7 +38,7 @@ const FavoriteButton = ({ bookId, bookObj = {} }) => {
       author: bookObj.author,
       price: bookObj.price,
       publisher: bookObj.publisher,
-      published: publishedISO,
+      published:  new Date(bookObj.published).toISOString(),
       image: bookObj.image,
     };
 

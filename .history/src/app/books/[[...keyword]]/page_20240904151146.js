@@ -20,8 +20,10 @@ export default function BookResult({ params }) {
 
   const signInUser = useRecoilValue(signInUserState); // サインインユーザーの取得
   console.log("signInUser", signInUser); // ここで `signInUser` の値を確認
-  const [favorites, setFavorites] = useRecoilState(favoritesState);// お気に入りの状態管理
-  const [ownedBooks, setOwnedBooks] = useRecoilState(OwnedBooksState);// 所有する本の状態管理
+  const [favorites, setFavorites] = useRecoilState(favoritesState);
+  const [ownedBooks, setOwnedBooks] = useRecoilState(OwnedBooksState);
+
+  
 
   useEffect(() => {
     const fetchBooks = async () => {
@@ -71,32 +73,8 @@ export default function BookResult({ params }) {
   
     fetchFavorites();
   }, [signInUser, setFavorites]);
-
-  useEffect(() => {
-    const fetchOwnedBooks = async () => {
-      if (!signInUser || !signInUser.uid) return;
-
-      try {
-        const response = await fetch(`/api/bookshelf?userId=${signInUser.uid}`);
-        if (!response.ok) {
-          console.error('Network response was not ok:', response.statusText);
-          return;
-        }
-
-        const ownedBooksData = await response.json();
-        if (Array.isArray(ownedBooksData)) {
-          setOwnedBooks(ownedBooksData.map(book => book.id)); // 所有する本のIDをセット
-        } else {
-          console.error("Unexpected data format:", ownedBooksData);
-        }
-      } catch (error) {
-        console.error("本棚の取得中にエラーが発生しました:", error);
-      }
-    };
-
-    fetchOwnedBooks();
-  }, [signInUser, setOwnedBooks]);
   
+
   // ページ変更時に呼び出される関数
   const handleChange = (event, value) => {
     setPage(value); // 現在のページ番号を更新
@@ -109,7 +87,6 @@ export default function BookResult({ params }) {
   );
 
   console.log("favorites", favorites); // デバッグ: favorites の内容を表示
-  console.log("ownedBooks", ownedBooks); // デバッグ: ownedBooks の内容を表示
 
   return (
     <div>
@@ -125,7 +102,6 @@ export default function BookResult({ params }) {
                 index={i + 1} 
                 key={b.id} 
                 isFavorite={favorites.includes(b.id)} // お気に入り状態を渡す
-                isOwned={ownedBooks.includes(b.id)} // 所有本の状態を渡す
                 />
             ))
           ) : (

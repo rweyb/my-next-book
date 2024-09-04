@@ -6,7 +6,7 @@ function isValidId(id) {
   return typeof id === 'string' && id.trim().length > 0;
 }
 
-/// お気に入りを追加する
+//所有している本を追加する
 export async function POST(req) {
   try {
     const data = await req.json();
@@ -39,7 +39,7 @@ export async function POST(req) {
     }
 
     // 既存のお気に入りを確認
-    const existingFavorite = await prisma.favorite.findUnique({
+    const existingFavorite = await prisma.ownedBook.findUnique({
       where: {
         userId_bookId: {
           userId,
@@ -50,13 +50,13 @@ export async function POST(req) {
 
     if (existingFavorite) {
       return NextResponse.json(
-        { error: "このお気に入りは既に存在します。" },
+        { error: "この書籍は既に存在します。" },
         { status: 400 }
       );
     }
 
-    // お気に入りを追加
-    const favorite = await prisma.favorite.create({
+    // 所有する本を追加
+    const favorite = await prisma.ownedBook.create({
       data: {
         userId,
         bookId,
@@ -68,9 +68,9 @@ export async function POST(req) {
         image,
       },
     });
-    console.log("Favorite added:", favorite);
+    console.log("ownedBook added:", ownedBook);
 
-    return NextResponse.json({ message: "お気に入りが追加されました。" });
+    return NextResponse.json({ message: "書籍が追加されました。" });
   } catch (error) {
     console.error("Error in API:", error);
     return NextResponse.json(
@@ -80,8 +80,7 @@ export async function POST(req) {
   }
 }
 
-
-// お気に入り一覧を取得する
+// ユーザーの所有する本一覧を取得
 export async function GET(req) {
   try {
     const url = new URL(req.url);
@@ -89,13 +88,13 @@ export async function GET(req) {
 
     if (!userId || !isValidId(userId)) {
       return NextResponse.json(
-        { error: "ユーザーIDが指定されていないか、無効な形式です。" },
-        { status: 400 }
+        { error: "無効なユーザーIDが指定されています。" },
+        { status: 400 } // Bad Request
       );
     }
 
-    // ユーザーのすべてのお気に入りを取得
-    const favorites = await prisma.favorite.findMany({
+    // ユーザーの所有する本を取得
+    const ownedBooks = await prisma.ownedBook.findMany({
       where: { userId },
       select: {
         bookId: true,
@@ -107,50 +106,45 @@ export async function GET(req) {
         image: true,
       },
     });
-    
-    return NextResponse.json(favorites); // 書籍情報も返す場合は、必要な情報を含める
+
+    // 所有する本の詳細情報を返す（必要に応じてフィールドを選択）
+    return NextResponse.json(ownedBooks);
   } catch (error) {
-    console.error("API Error:", error.message); // エラーメッセージの詳細を出力
+    console.error("API Error in GET:", error.message);
     return NextResponse.json(
       { error: "Internal Server Error" },
-      { status: 500 } 
+      { status: 500 } // Internal Server Error
     );
   }
 }
 
-// お気に入りを削除する
+
+
+// ユーザーの所有する本を削除
 export async function DELETE(req) {
   try {
     const data = await req.json();
     const { userId, bookId } = data;
 
-    if (!userId || !bookId) {
+    if (!userId || !bookId || !isValidId(userId) || !isValidId(bookId)) {
       return NextResponse.json(
-        { error: "ユーザーIDまたは書籍IDが指定されていません。" },
+        { error: "無効なユーザーIDまたは書籍IDが指定されています。" },
         { status: 400 } // Bad Request
       );
     }
 
-    if (!isValidId(userId) || !isValidId(bookId)) {
-      return NextResponse.json(
-        { error: "無効なIDの形式です。" },
-        { status: 400 }
-      );
-    }
-
-    
-    const deleteResult = await prisma.favorite.deleteMany({
+    const deleteResult = await prisma.ownedBook.deleteMany({
       where: { userId, bookId },
     });
 
     if (deleteResult.count === 0) {
       return NextResponse.json(
-        { error: "お気に入りが見つからないか、削除できませんでした。" },
-        { status: 404 }
+        { error: "所有する本が見つからないか、削除できませんでした。" },
+        { status: 404 } // Not Found
       );
     }
 
-    return NextResponse.json({ message: "お気に入りが削除されました。" });
+    return NextResponse.json({ message: "書籍が削除されました。" });
   } catch (error) {
     console.error("API Error in DELETE:", error.message);
     return NextResponse.json(

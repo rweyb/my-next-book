@@ -24,11 +24,7 @@ export default function LinkedBookDetails({ index, book, isFavorite }) {
         </Link>
 
         <Link href={"/bookshelf"}>
-          <MyBooksButton
-            bookId={book.id}
-            bookObj={book}
-            isFavorite={isFavorite}
-          /> {/* MyBooksButtonを右下に配置 */}
+          <MyBooksButton /> {/* MyBooksButtonを右下に配置 */}
         </Link>
       </div>
     </div>

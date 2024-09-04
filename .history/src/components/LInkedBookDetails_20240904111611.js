@@ -3,7 +3,7 @@ import BookDetails from "./BookDetails";
 import FavoriteButton from "./FavoriteButton";
 import MyBooksButton from "./MyBooksButton";
 
-export default function LinkedBookDetails({ index, book, isFavorite }) {
+export default function LinkedBookDetails({ index, book }) {
   console.log("LinkedBookDetails の book", book);
   //BookDetailsコンポーネントにリンクを付与
   return (
@@ -15,20 +15,12 @@ export default function LinkedBookDetails({ index, book, isFavorite }) {
       </Link>
       <div className="absolute bottom-2 right-2">
         <Link href={"/my-favorites"}>
-          <FavoriteButton
-            bookId={book.id}
-            bookObj={book}
-            isFavorite={isFavorite}
-            />
+          <FavoriteButton bookId={book.id} bookObj={book} />
           {/* FavoriteButtonを右下に配置 */}
         </Link>
 
         <Link href={"/bookshelf"}>
-          <MyBooksButton
-            bookId={book.id}
-            bookObj={book}
-            isFavorite={isFavorite}
-          /> {/* MyBooksButtonを右下に配置 */}
+          <MyBooksButton /> {/* MyBooksButtonを右下に配置 */}
         </Link>
       </div>
     </div>

@@ -54,6 +54,7 @@ model Favorite {
 }
 
 
+
 model OwnedBook {
   id        String   @id @default(uuid()) @map("_id")
   userId    String

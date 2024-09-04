@@ -91,7 +91,6 @@ const FavoritesPage = () => {
                   alt={book.title || "書籍画像"}
                   width={120}
                   height={160}
-                  layout="intrinsic"
                   className="object-cover rounded-lg" // 画像を調整するクラス
                 />
               </div>

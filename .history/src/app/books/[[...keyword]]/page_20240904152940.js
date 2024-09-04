@@ -23,6 +23,8 @@ export default function BookResult({ params }) {
   const [favorites, setFavorites] = useRecoilState(favoritesState);// お気に入りの状態管理
   const [ownedBooks, setOwnedBooks] = useRecoilState(OwnedBooksState);// 所有する本の状態管理
 
+  
+
   useEffect(() => {
     const fetchBooks = async () => {
       if (!keyword) {
@@ -125,7 +127,6 @@ export default function BookResult({ params }) {
                 index={i + 1} 
                 key={b.id} 
                 isFavorite={favorites.includes(b.id)} // お気に入り状態を渡す
-                isOwned={ownedBooks.includes(b.id)} // 所有本の状態を渡す
                 />
             ))
           ) : (

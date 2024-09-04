@@ -44,17 +44,20 @@ const MyBooksButton = ({ bookId, bookObj = {} }) => {
       image: bookObj.image,
     };
 
+
     try {
       const response = isOwned
         ? await fetch("/api/bookshelf", {
             method: "DELETE",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ userId: signInUser.uid, bookId }),
+            credentials: "include",
           })
         : await fetch("/api/bookshelf", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(requestBody),
+            body: JSON.stringify({ userId: signInUser.uid, bookId }),
+            credentials: "include",
           });
 
       if (!response.ok) {
@@ -62,7 +65,8 @@ const MyBooksButton = ({ bookId, bookObj = {} }) => {
         console.error("エラーレスポンス:", errorData.error || "Unknown error");
         throw new Error(
           `HTTPエラー! ステータス: ${response.status}, メッセージ: ${
-            errorData.error || "Unknown error"}`
+            errorData.error || "Unknown error"
+          }`
         );
       }
 

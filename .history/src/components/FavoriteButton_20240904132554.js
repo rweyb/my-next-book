@@ -13,15 +13,9 @@ const FavoriteButton = ({ bookId, bookObj = {} }) => {
     console.error("bookObj is undefined or null");
     return null;
   }
-
+  
   const isFavorite = favorites.includes(bookId); // 現在の本がお気に入りかどうかを確認
   console.log("favoritesのbook", bookObj);
-
-   // `bookObj.published` が有効な日付であるかをチェック
-   const publishedDate = new Date(bookObj.published);
-   const publishedISO = publishedDate instanceof Date && !isNaN(publishedDate.getTime())
-     ? publishedDate.toISOString()
-     : 'N/A'; // 無効な日付の場合はデフォルト値を設定
 
   const handleClick = async (event) => {
     event.preventDefault(); // デフォルトの動作を防ぐ
@@ -38,7 +32,7 @@ const FavoriteButton = ({ bookId, bookObj = {} }) => {
       author: bookObj.author,
       price: bookObj.price,
       publisher: bookObj.publisher,
-      published: publishedISO,
+      published:  new Date(bookObj.published).toISOString(),
       image: bookObj.image,
     };
 
