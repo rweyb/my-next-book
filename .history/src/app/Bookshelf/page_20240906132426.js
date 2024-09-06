@@ -15,11 +15,6 @@ const BookshelfPage = () => {
   const [error, setError] = useState(null); // エラーメッセージの状態管理
 
   useEffect(() => {
-    console.log("BookshelfPage books:", books);
-  }, [books]);
-
-
-  useEffect(() => {
     const fetchOwnedBooks = async () => {
       if (!signInUser?.uid) {
         setError("ユーザーがサインインしていません。");
@@ -47,7 +42,6 @@ const BookshelfPage = () => {
     };
 
     fetchOwnedBooks();
-    console.log("Current ownedBooks in BookshelfPage:", ownedBooks);
   }, [ownedBooks, signInUser]); // `signInUser` または `setOwnedBooks` が変更されると再実行
 
   
@@ -116,9 +110,10 @@ const BookshelfPage = () => {
                   </p>
                 </div>
                 <MyBooksButton
-                  bookId={book.bookId} // bookId ではなく、bookId を使用しているか確認
+                  bookId={book.id}
                   bookObj={book}
                   onChange={handleOwnedChange}
+                  
                 />
               </div>
             ))

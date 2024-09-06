@@ -5,14 +5,13 @@ import { OwnedBooksState } from "@/state/OwnedBooksState";
 import { signInUserState } from "@/state/signInUserState";
 
 const MyBooksButton = ({ bookId, bookObj = {} }) => {
-  console.log("Received bookId:", bookId); 
   // Recoilで状態を管理
   const [ownedBooks, setOwnedBooks] = useRecoilState(OwnedBooksState);
   const signInUser = useRecoilValue(signInUserState); // サインインユーザーの状態を取得
 
  // useEffect を使って bookId の状態を監視
  useEffect(() => {
-  if (bookId === undefined) {
+  if (!bookId) {
     console.error("MyBooksButton に渡された bookId が undefined です");
   } else {
     console.log("MyBooksButton に渡された bookId:", bookId);

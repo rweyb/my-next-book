@@ -119,7 +119,7 @@ const BookshelfPage = () => {
                   bookId={book.bookId} // bookId ではなく、bookId を使用しているか確認
                   bookObj={book}
                   onChange={handleOwnedChange}
-                />
+/>
               </div>
             ))
           ) : (

@@ -12,7 +12,7 @@ const MyBooksButton = ({ bookId, bookObj = {} }) => {
 
  // useEffect を使って bookId の状態を監視
  useEffect(() => {
-  if (bookId === undefined) {
+  if (!bookId) {
     console.error("MyBooksButton に渡された bookId が undefined です");
   } else {
     console.log("MyBooksButton に渡された bookId:", bookId);

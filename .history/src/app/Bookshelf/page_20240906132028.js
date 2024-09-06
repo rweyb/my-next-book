@@ -15,11 +15,6 @@ const BookshelfPage = () => {
   const [error, setError] = useState(null); // エラーメッセージの状態管理
 
   useEffect(() => {
-    console.log("BookshelfPage books:", books);
-  }, [books]);
-
-
-  useEffect(() => {
     const fetchOwnedBooks = async () => {
       if (!signInUser?.uid) {
         setError("ユーザーがサインインしていません。");
@@ -47,7 +42,6 @@ const BookshelfPage = () => {
     };
 
     fetchOwnedBooks();
-    console.log("Current ownedBooks in BookshelfPage:", ownedBooks);
   }, [ownedBooks, signInUser]); // `signInUser` または `setOwnedBooks` が変更されると再実行
 
   
@@ -94,6 +88,7 @@ const BookshelfPage = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {books.length > 0 ? (
             books.map((book) => (
+              console.log("Book object:", book);
               <div key={book.id} className="relative border p-4 rounded-lg shadow-md flex flex-col items-center">
                 <Image
                   src={book.image || "/images/default_image.jpg"}
@@ -116,9 +111,10 @@ const BookshelfPage = () => {
                   </p>
                 </div>
                 <MyBooksButton
-                  bookId={book.bookId} // bookId ではなく、bookId を使用しているか確認
+                  bookId={book.id}
                   bookObj={book}
                   onChange={handleOwnedChange}
+                  
                 />
               </div>
             ))

@@ -116,9 +116,10 @@ const BookshelfPage = () => {
                   </p>
                 </div>
                 <MyBooksButton
-                  bookId={book.bookId} // bookId ではなく、bookId を使用しているか確認
+                  bookId={book.id}
                   bookObj={book}
                   onChange={handleOwnedChange}
+                  
                 />
               </div>
             ))
