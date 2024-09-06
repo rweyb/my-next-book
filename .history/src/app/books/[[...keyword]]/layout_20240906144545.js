@@ -33,7 +33,8 @@ const handleSearch = () => {
             <div className="max-w-screen-lg mx-auto px-4 py-2"> {/* コンテナを中央に配置 */}
                 {children}
             </div>
-       
+        <hr />
+        {children}
         </>
     );
 }

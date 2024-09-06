@@ -4,14 +4,11 @@ import { useState, useEffect } from "react";
 import LinkedBookDetails from "@/components/LinkedBookDetails";
 import PaginationComponent from "@/components/PaginationComponent";
 import { getBooksByKeyword } from "@lib/getter";
-<<<<<<< HEAD
 import ReturnTopButton from "@/components/ReturnTopButton";
 import { useRecoilValue, useRecoilState } from "recoil";
 import { signInUserState } from "@/state/signInUserState";
 import { favoritesState } from "@/state/favoritesState";
 import { OwnedBooksState } from "@/state/OwnedBooksState";
-=======
->>>>>>> 8a0072d6459980df93b335947cdda449ef067eb6
 
 // ルートパラメーターparamsを取得
 export default function BookResult({ params }) {
@@ -21,14 +18,11 @@ export default function BookResult({ params }) {
   const [error, setError] = useState(null); // エラーメッセージを格納する状態
   const booksPerPage = 10; // 1ページあたりの書籍数
 
-<<<<<<< HEAD
   const signInUser = useRecoilValue(signInUserState); 
   console.log("signInUser", signInUser); 
   const [favorites, setFavorites] = useRecoilState(favoritesState);
   const [ownedBooks, setOwnedBooks] = useRecoilState(OwnedBooksState);
 
-=======
->>>>>>> 8a0072d6459980df93b335947cdda449ef067eb6
   useEffect(() => {
     const fetchBooks = async () => {
       if (!keyword) {
@@ -36,25 +30,12 @@ export default function BookResult({ params }) {
         return;
       }
 
-<<<<<<< HEAD
       try {
         const fetchedBooks = await getBooksByKeyword(
           keyword,
           page,
           booksPerPage
         );
-=======
-      // keywordを文字列に変換
-      const searchKeyword = String(keyword);
-
-      try {
-        const fetchedBooks = await getBooksByKeyword(
-          searchKeyword,
-          page,
-          booksPerPage
-        ); // 書籍データを取得
-        console.log("Fetched Books:", fetchedBooks); // 追加
->>>>>>> 8a0072d6459980df93b335947cdda449ef067eb6
         setBooks(fetchedBooks);
         setError(null);
       } catch (error) {
@@ -62,7 +43,6 @@ export default function BookResult({ params }) {
         setError("書籍情報の取得に失敗しました。もう一度お試しください。");
       }
     };
-<<<<<<< HEAD
     fetchBooks();
   }, [keyword, page]);
 
@@ -122,12 +102,6 @@ export default function BookResult({ params }) {
     fetchOwnedBooks();
   }, [signInUser, setOwnedBooks]);
   
-=======
-
-    fetchBooks();
-  }, [keyword, page]);
-
->>>>>>> 8a0072d6459980df93b335947cdda449ef067eb6
   // ページ変更時に呼び出される関数
   const handleChange = (event, value) => {
     setPage(value); // 現在のページ番号を更新
@@ -139,12 +113,9 @@ export default function BookResult({ params }) {
     page * booksPerPage
   );
 
-<<<<<<< HEAD
   console.log("favorites", favorites); 
   console.log("ownedBooks", ownedBooks); 
 
-=======
->>>>>>> 8a0072d6459980df93b335947cdda449ef067eb6
   return (
     <div>
       {error ? (
@@ -154,7 +125,6 @@ export default function BookResult({ params }) {
           {/* 現在のページに表示する書籍データをリスト表示 */}
           {books.length > 0 ? (
             paginatedBooks.map((b, i) => (
-<<<<<<< HEAD
               <LinkedBookDetails 
                 book={b}
                 index={i + 1} 
@@ -162,9 +132,6 @@ export default function BookResult({ params }) {
                 isFavorite={favorites.includes(b.id)} // お気に入り状態を渡す
                 isOwned={ownedBooks.includes(b.id)} // 所有本の状態を渡す
                 />
-=======
-              <LinkedBookDetails book={b} index={i + 1} key={b.id} />
->>>>>>> 8a0072d6459980df93b335947cdda449ef067eb6
             ))
           ) : (
             <p>書籍情報が見つかりませんでした。</p>
@@ -174,21 +141,12 @@ export default function BookResult({ params }) {
           <PaginationComponent
             page={page} // 現在のページ番号
             count={Math.ceil(books.length / booksPerPage)} // 総ページ数
-<<<<<<< HEAD
             onChange={handleChange} 
           />
           {/* ページの下部に ReturnTopButton を追加 */}
           <ReturnTopButton />
-=======
-            onChange={handleChange} // ページ変更時に呼び出される関数
-          />
->>>>>>> 8a0072d6459980df93b335947cdda449ef067eb6
         </>
       )}
     </div>
   );
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 8a0072d6459980df93b335947cdda449ef067eb6
