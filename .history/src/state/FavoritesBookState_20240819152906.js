@@ -1,7 +1,0 @@
-import { atom } from 'recoil';
-
-// お気に入りの状態を管理するRecoilのatom
-export const favoritesState = atom({
-    key: 'favoritesState',
-    default: [], // 初期値は空の配列
-});
