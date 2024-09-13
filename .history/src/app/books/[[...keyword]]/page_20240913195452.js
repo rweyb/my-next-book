@@ -1,7 +1,7 @@
 "use client"; // クライアントコンポーネントとしてマーク
 
 import { useState, useEffect } from "react";
-import LinkedBookDetails from '@components/LinkedBookDetails';
+import LinkedBookDetails from "@/components/LinkedBookDetails";
 import PaginationComponent from "@/components/PaginationComponent";
 import { getBooksByKeyword } from "@lib/getter";
 import ReturnTopButton from "@/components/ReturnTopButton";
