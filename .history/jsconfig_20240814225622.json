@@ -5,7 +5,6 @@
       "@state/*": ["src/state/*"],
       "@lib/*": ["./src/lib/*"],
       "@/*": ["./src/*"],
-      "@components/*": ["./src/components/*"],
       "@/common/design": ["./src/common/design"],
       "@/lib/firebase/apis/auth": ["./src/lib/firebase/apis/auth"],
       "@/context/*": ["./src/context/*"]
